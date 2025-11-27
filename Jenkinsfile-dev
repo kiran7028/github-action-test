@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'dev', url: 'https://yourrepo.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean install -DskipTests=true'
+            }
+        }
+
+        stage('Dev Deployment') {
+            steps {
+                echo "Deploying application to DEV environment..."
+            }
+        }
+    }
+}

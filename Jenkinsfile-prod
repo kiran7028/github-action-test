@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://yourrepo.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('Approval Before Deployment') {
+            steps {
+                script {
+                    timeout(time: 2, unit: 'HOURS') {
+                        input(message: 'Approve production deployment?')
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to PRODUCTION') {
+            steps {
+                echo "Deploying application to PRODUCTION environment..."
+            }
+        }
+    }
+}

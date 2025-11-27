@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'stage', url: 'https://yourrepo.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('Integration Tests') {
+            steps {
+                echo "Running integration tests for STAGE..."
+            }
+        }
+
+        stage('Deploy to STAGE') {
+            steps {
+                echo "Deploying application to STAGE environment..."
+            }
+        }
+    }
+}

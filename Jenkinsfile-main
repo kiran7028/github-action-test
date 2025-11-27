@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://yourrepo.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('Unit Tests') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Package Artifact') {
+            steps {
+                echo "Packaging artifact for MAIN environment..."
+            }
+        }
+
+        stage('Deploy to MAIN') {
+            steps {
+                echo "Deploying to MAIN (Production-Ready Environment)"
+            }
+        }
+    }
+}
